@@ -7,13 +7,23 @@ import './index.css';
 class Game extends React.Component {
     state = {
         board : [
-            0, 'b', 0,
-            'd', 5, 6,
-            7, 'h', 0
+            0, 0, 0,
+            0, 0, 0,
+            0, 0, 0
         ]
     }
     updateBoardShape = (i) => {
-        console.log("state.changed at index " + i + "!")
+        const newBoard = this.state.board.concat([]);
+        newBoard[i] = i+1;
+        this.setState({board:newBoard});
+    }
+
+    componentDidMount() {
+        console.log(this.state.board);
+    }
+
+    componentDidUpdate() {
+        console.log(this.state.board);
     }
 
     render(){

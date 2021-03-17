@@ -5,8 +5,6 @@ import './index.css';
 
 
 class Board extends React.Component {
-
-
     render() {
         const cases = this.props.boardShape.map((caseNumber, i) => {
             var customClassName = "case case" + i;
@@ -24,7 +22,7 @@ class Board extends React.Component {
                         </div>
                     );
                 } else {
-                    return <div className={customClassName} key={i} onClick={this.props.updateBoardShape(i)}></div>
+                    return <div className={customClassName} key={i} onClick={()=>{this.props.updateBoardShape(i);}}></div>
                 }
             }
         })
