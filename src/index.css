@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+body{
+    font-family: 'Poppins', sans-serif;
+}
+
 .game{
     height: 100vh;
     width: 100vw;
@@ -12,6 +16,22 @@
     flex-direction: column;
     justify-content: space-evenly;  
     align-items: center; 
+}
+
+.player-section{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 0 2rem;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.coin-balance{
+    font-size: 1.3rem;
+    text-align: center;
+    color: #F0CC4B;
 }
 
 .board{
@@ -33,11 +53,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: .3s all ease;
 }
 
-p{
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 2rem;
+.case:hover{
+    background-color: #386faf;
+}
+
+.message{
+    font-size: 1.2rem;
     letter-spacing: .1rem;
     color: white;
 }

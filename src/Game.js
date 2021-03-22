@@ -1,7 +1,8 @@
 import React from 'react';
-import Board from './board'
-import PlayerSection from './playerSection'
-import isGameWon from './isGameWon'
+import Board from './board';
+import PlayerSection from './playerSection';
+import BettingForm from './BettingForm';
+import isGameWon from './isGameWon';
 
 import './index.css';
 
@@ -12,7 +13,16 @@ class Game extends React.Component {
             0, 0, 0,
             0, 0, 0,
             0, 0, 0
-        ]
+        ],
+        player1: {
+            name: 'PLAYER_1',
+            coinBalance: 100
+        },
+        player2: {
+            name: 'PLAYER_2',
+            coinBalance: 100
+        },
+        isFormVisible: false
     }
     updateBoardShape = (i) => {
         const newBoard = this.state.board.concat([]);
@@ -21,8 +31,12 @@ class Game extends React.Component {
         } else {
             newBoard[i] = String.fromCharCode(97 + i);
         }
-        this.setState({ board: newBoard });
+        this.setState({ board: newBoard }, () => {
+            this.changeTurn();
+            this.setState(Object.assign({}, this.state, {isFormVisible: true}));
+        });
     }
+
 
     changeTurn = () => {
         const newTurn = (this.state.turn === 1) ? 2 : 1;
@@ -46,16 +60,24 @@ class Game extends React.Component {
         }
     }
 
+
+
     render() {
-        var message = isGameWon(this.state.board) ? <p><strong>THE PLAYER #{this.state.turn} HAS WON!</strong></p> : <p><strong>CURRENT TURN IS : {this.state.turn}</strong></p>
+        var gameEnded = isGameWon(this.state.board);
+        var message = gameEnded ? `THE PLAYER #${this.state.turn} HAS WON!` : `CURRENT TURN IS : ${this.state.turn}`
 
         return (
             <div className="game">
-                <PlayerSection />
-                    {message}
+                <PlayerSection
+                    player1={this.state.player1}
+                    player2={this.state.player2}
+                />
+                <p className="message"><b>{message}</b></p>
+                <BettingForm displayed={this.state.isFormVisible} />
                 <Board
                     boardShape={this.state.board}
                     updateBoardShape={this.updateBoardShape}
+                    gameEnded={gameEnded}
                 />
                 <button onClick={this.changeTurn}>CHANGE TURN</button>
                 <button onClick={this.clearBoard}>CLEAR THE BOARD</button>

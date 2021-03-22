@@ -27,7 +27,9 @@ class Board extends React.Component {
                         className={customClassName}
                         key={i}
                         onClick={()=>{
-                            this.props.updateBoardShape(i);
+                            if(!this.props.gameEnded){
+                                this.props.updateBoardShape(i);
+                            }
                         }}></div>
                     );
                 }
