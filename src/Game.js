@@ -3,27 +3,35 @@ import Board from './board';
 import PlayerSection from './playerSection';
 import BettingForm from './BettingForm';
 import isGameWon from './isGameWon';
+import { getRoomState, updateRoomState } from './client';
 
 import './index.css';
 
 class Game extends React.Component {
     state = {
-        turn: 1,
-        board: [
+        "turn": 0,
+        "board": [
             0, 0, 0,
             0, 0, 0,
             0, 0, 0
         ],
-        player1: {
-            name: 'PLAYER_1',
-            coinBalance: 100
-        },
-        player2: {
-            name: 'PLAYER_2',
-            coinBalance: 100
-        },
-        isFormVisible: false
+        "player1": {},
+        "player2": {},
+        "isFormVisible": false
     }
+
+    componentDidMount() {
+        //load state from server
+        this.LoadStateFromServer();
+    }
+
+    LoadStateFromServer = () => {
+        getRoomState((roomState) => {
+            this.setState(Object.assign({}, this.state, roomState));
+        });
+    };
+
+
     updateBoardShape = (i) => {
         const newBoard = this.state.board.concat([]);
         if (this.state.turn === 1) {
@@ -31,10 +39,13 @@ class Game extends React.Component {
         } else {
             newBoard[i] = String.fromCharCode(97 + i);
         }
+
         this.setState({ board: newBoard }, () => {
+            updateRoomState(this.state);//update in the server
             this.changeTurn();
-            this.setState(Object.assign({}, this.state, {isFormVisible: true}));
+            this.setState(Object.assign({}, this.state, { isFormVisible: true }));
         });
+
     }
 
 
@@ -53,21 +64,19 @@ class Game extends React.Component {
         }))
     }
 
-    componentDidUpdate() {
-        const newBoard = this.state.board;
-        if (isGameWon(newBoard)) {
-            console.log("PLAYER " + this.state.turn + " HAS WON !!");
-        }
-    }
-
 
 
     render() {
+
+        // getRooms((rooms) => console.log(rooms));
+
+
         var gameEnded = isGameWon(this.state.board);
         var message = gameEnded ? `THE PLAYER #${this.state.turn} HAS WON!` : `CURRENT TURN IS : ${this.state.turn}`
 
         return (
             <div className="game">
+
                 <PlayerSection
                     player1={this.state.player1}
                     player2={this.state.player2}

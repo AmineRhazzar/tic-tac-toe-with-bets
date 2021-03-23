@@ -11,7 +11,7 @@ class BettingForm extends React.Component {
         return (
             <form action={roomAPI} method='POST'>
                 <input type='number' required={true} min="0" max={player.coinBalance} />
-                <input type='text' hidden={true} value={player.name} />
+                <input type='text' hidden={true} />
                 <button type='submit'>BET</button>
             </form>
         );
