@@ -43,7 +43,7 @@ class Game extends React.Component {
         this.setState({ board: newBoard }, () => {
             updateRoomState(this.state);//update in the server
             this.changeTurn();
-            this.setState(Object.assign({}, this.state, { isFormVisible: true }));
+            this.setState(Object.assign({}, this.state, { isFormVisible: false }));
         });
 
     }
@@ -61,7 +61,9 @@ class Game extends React.Component {
                 0, 0, 0,
                 0, 0, 0
             ]
-        }))
+        }), () => {
+            updateRoomState(this.state);
+        })
     }
 
 
