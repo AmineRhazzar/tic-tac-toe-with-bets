@@ -30,7 +30,8 @@ class Home extends React.Component {
                 <Route
                     path={'/' + this.state.newRoomCode} exact
                     render={(props) => (
-                        <Game {...props} roomCode={this.state.roomCode} />
+                        this.state.newRoomCode ? (<Game roomCode={this.state.roomCode} />):(<HomePage createRoomCode={this.createRoomCode} /> )
+                        
                     )}
                 />
             </Router>
