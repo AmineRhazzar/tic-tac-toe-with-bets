@@ -12,16 +12,26 @@ class HomePage extends React.Component {
 
     validate = (e) => {
         //check if this.state.username is available
-        //....
         e.preventDefault();
-        this.props.createRoomCode();
+        this.props.createRoomCode(this.state.chosenUsername);
     }
+
+    createRoomCode = () => {
+        this.props.createRoomCode(this.state.chosenUsername);
+    }
+
+    joinRoom = () => {
+        
+    }
+
 
     render() {
         return (
             <form onSubmit={this.validate}>
-                <input type="text" value={this.state.chosenUsername} onChange={this.onUsernameChange} />
-                <button type="submit">Create Room</button>
+                <label htmlFor="username">Enter Your username</label>
+                <input type="text" value={this.state.chosenUsername} onChange={this.onUsernameChange} name="username" />
+                <button type="submit" onClick={this.createRoomCode}>Create Room</button>
+                <button type="submit">Join Room</button>
             </form>
         );
     }

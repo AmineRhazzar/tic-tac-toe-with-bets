@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { getRoomState, updateRoomState } from './client';
 import Game from './Game';
 import HomePage from './HomePage'
 import './index.css';
@@ -10,8 +11,23 @@ class Home extends React.Component {
         newRoomCode: ''
     }
 
-    createRoomCode = () => {
+    createRoomCode = (chosenUsername) => {
+        const newRoomState = {
+            "turn": 2,
+            "board": [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            "player1": { "name": chosenUsername, "coinBalance": 100, "bet": 0 },
+            "player2": { "name": "", "coinBalance": 100, "bet": 0 },
+            "isFormVisible": false
+        };
+        updateRoomState(newRoomState);
         this.setState({ newRoomCode: 'azert' });
+    }
+
+    joinRoom = (chosenUsername) => {
+        //load state from server
+        //change the name of player2 to chosenUsername
+        //update room state to the server
+        //setState to newRoomCode: 'azert'
     }
 
 
@@ -31,7 +47,7 @@ class Home extends React.Component {
                     path={this.state.newRoomCode ? ('/' + this.state.newRoomCode) : ('/testroom')}
                     exact
                     render={(props) => (
-                        this.state.newRoomCode ? (<Game roomCode={this.state.roomCode} />) : (<HomePage createRoomCode={this.createRoomCode} />)
+                        this.state.newRoomCode ? (<Game roomCode={this.state.roomCode} />) : (<HomePage createRoomCode={this.createRoomCode} joinRoom={this.joinRoom}/>)
 
                     )}
                 />
