@@ -10,9 +10,10 @@ class HomePage extends React.Component {
         this.setState({ chosenUsername: e.target.value });
     }
 
-    validate = () => {
+    validate = (e) => {
         //check if this.state.username is available
         //....
+        e.preventDefault();
         this.props.createRoomCode();
     }
 

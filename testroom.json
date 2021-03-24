@@ -1,1 +1,7 @@
-{}
+{
+  "turn": 2,
+  "board": [1, 2, "c", 0, 5, "f", "g", 0, "i"],
+  "player1": { "name": "", "coinBalance": 100, "bet": 0 },
+  "player2": { "name": "", "coinBalance": 100, "bet": 0 },
+  "isFormVisible": false
+}

@@ -9,7 +9,7 @@ import './index.css';
 
 class Game extends React.Component {
     state = {
-        "turn": 0,
+        "turn": 1,
         "board": [
             0, 0, 0,
             0, 0, 0,
@@ -51,7 +51,9 @@ class Game extends React.Component {
 
     changeTurn = () => {
         const newTurn = (this.state.turn === 1) ? 2 : 1;
-        this.setState(Object.assign({}, this.state, { turn: newTurn }))
+        this.setState(Object.assign({}, this.state, { turn: newTurn }), () => {
+            updateRoomState(this.state);
+        })
     }
 
     clearBoard = () => {

@@ -19,19 +19,20 @@ class Home extends React.Component {
         return (
             <Router>
                 <Route
-                    path="/"
+                    path='/'
                     exact
                     render={
                         () => (
-                            (this.state.newRoomCode !== '') ? (<Redirect to={'/' + this.state.newRoomCode} />) : (<HomePage createRoomCode={this.createRoomCode} />)
+                            this.state.newRoomCode ? (<Redirect to={'/' + this.state.newRoomCode} />) : (<HomePage createRoomCode={this.createRoomCode} />)
                         )
                     }
                 />
                 <Route
-                    path={'/' + this.state.newRoomCode} exact
+                    path={this.state.newRoomCode ? ('/' + this.state.newRoomCode) : ('/testroom')}
+                    exact
                     render={(props) => (
-                        this.state.newRoomCode ? (<Game roomCode={this.state.roomCode} />):(<HomePage createRoomCode={this.createRoomCode} /> )
-                        
+                        this.state.newRoomCode ? (<Game roomCode={this.state.roomCode} />) : (<HomePage createRoomCode={this.createRoomCode} />)
+
                     )}
                 />
             </Router>
