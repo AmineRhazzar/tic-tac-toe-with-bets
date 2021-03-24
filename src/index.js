@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import HomePage from './HomePage'
+import Home from './Router'
 import './index.css';
 
-ReactDOM.render(<HomePage />, document.getElementById('root'));
+ReactDOM.render(<Home />, document.getElementById('root'));
 
 
 

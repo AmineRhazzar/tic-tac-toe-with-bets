@@ -13,8 +13,7 @@ class HomePage extends React.Component {
     validate = () => {
         //check if this.state.username is available
         //....
-        console.log(this.props);
-        // this.props.createRoomCode();
+        this.props.createRoomCode();
     }
 
     render() {
