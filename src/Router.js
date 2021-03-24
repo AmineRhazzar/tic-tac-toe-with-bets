@@ -12,6 +12,7 @@ class Home extends React.Component {
     }
 
     createRoomCode = (chosenUsername) => {
+        this.setState({ newRoomCode: 'azert' });
         const newRoomState = {
             "turn": 2,
             "board": [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -20,7 +21,7 @@ class Home extends React.Component {
             "isFormVisible": false
         };
         updateRoomState(newRoomState);
-        this.setState({ newRoomCode: 'azert' });
+        
     }
 
     joinRoom = (chosenUsername) => {
