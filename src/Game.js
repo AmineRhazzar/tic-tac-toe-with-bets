@@ -21,8 +21,15 @@ class Game extends React.Component {
     }
 
     componentDidMount() {
-        //load state from server
-        this.LoadStateFromServer();
+        if(this.state.turn !== this.props.playerID){
+            setInterval(()=>{
+                this.LoadStateFromServer();
+            }, 1000);
+        }else{
+            this.LoadStateFromServer();
+        }
+
+        
     }
 
     LoadStateFromServer = () => {
@@ -33,19 +40,19 @@ class Game extends React.Component {
 
 
     updateBoardShape = (i) => {
-        const newBoard = this.state.board.concat([]);
-        if (this.state.turn === 1) {
-            newBoard[i] = i + 1;
-        } else {
-            newBoard[i] = String.fromCharCode(97 + i);
+        if(this.state.turn === this.props.playerID){
+            const newBoard = this.state.board.concat([]);
+            if (this.state.turn === 1) {
+                newBoard[i] = i + 1;
+            } else {
+                newBoard[i] = String.fromCharCode(97 + i);
+            }
+    
+            this.setState({ board: newBoard }, () => {
+                this.changeTurn();
+                updateRoomState(this.state);
+            });
         }
-
-        this.setState({ board: newBoard }, () => {
-            updateRoomState(this.state);//update in the server
-            this.changeTurn();
-            this.setState(Object.assign({}, this.state, { isFormVisible: false }));
-        });
-
     }
 
 
@@ -92,7 +99,6 @@ class Game extends React.Component {
                     updateBoardShape={this.updateBoardShape}
                     gameEnded={gameEnded}
                 />
-                <button onClick={this.changeTurn}>CHANGE TURN</button>
                 <button onClick={this.clearBoard}>CLEAR THE BOARD</button>
             </div>
         );

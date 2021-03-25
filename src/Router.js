@@ -8,7 +8,8 @@ import './index.css';
 class Home extends React.Component {
 
     state = {
-        newRoomCode: ''
+        newRoomCode: '',
+        playerID: 0
     }
 
     createRoomCode = (chosenUsername) => {
@@ -25,6 +26,18 @@ class Home extends React.Component {
 
     joinRoom = (chosenUsername) => {
         //load state from server
+        getRoomState((roomState) => {
+            var newRoomState = {};
+            if (!roomState.player1.name) {
+                newRoomState = Object.assign({}, roomState, { player1: { name: chosenUsername, coinBalance: 100, bet: 0 } });
+                updateRoomState(newRoomState);
+                this.setState({ newRoomCode: 'azert', playerID: 1 });
+            } else if (!roomState.player2.name) {
+                newRoomState = Object.assign({}, roomState, { player2: { name: chosenUsername, coinBalance: 100, bet: 0 } });
+                updateRoomState(newRoomState);
+                this.setState({ newRoomCode: 'azert', playerID: 2 });
+            }
+        })
         //change the name of player2 to chosenUsername
         //update room state to the server
         //setState to newRoomCode: 'azert'
@@ -32,6 +45,9 @@ class Home extends React.Component {
 
 
     render() {
+
+        var playerID = this.state.playerID;
+
         return (
             <Router>
                 <Route
@@ -39,7 +55,7 @@ class Home extends React.Component {
                     exact
                     render={
                         () => (
-                            this.state.newRoomCode ? (<Redirect to={'/' + this.state.newRoomCode} />) : (<HomePage createRoomCode={this.createRoomCode} />)
+                            this.state.newRoomCode ? (<Redirect to={'/' + this.state.newRoomCode} />) : (<HomePage createRoomCode={this.createRoomCode} joinRoom={this.joinRoom} />)
                         )
                     }
                 />
@@ -47,7 +63,7 @@ class Home extends React.Component {
                     path={this.state.newRoomCode ? ('/' + this.state.newRoomCode) : ('/testroom')}
                     exact
                     render={(props) => (
-                        this.state.newRoomCode ? (<Game roomCode={this.state.roomCode} />) : (<HomePage createRoomCode={this.createRoomCode} joinRoom={this.joinRoom}/>)
+                        this.state.newRoomCode ? (<Game playerID={playerID} />) : (<HomePage createRoomCode={this.createRoomCode} joinRoom={this.joinRoom} />)
 
                     )}
                 />
