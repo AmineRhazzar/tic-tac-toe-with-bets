@@ -21,7 +21,7 @@ class Game extends React.Component {
         } else {
             newBoard[i] = String.fromCharCode(97 + i);
         }
-        this.setState({ board: newBoard });
+        this.setState({ board: newBoard }, () => { this.changeTurn(); });
     }
 
     changeTurn = () => {
@@ -52,7 +52,7 @@ class Game extends React.Component {
         return (
             <div className="game">
                 <PlayerSection />
-                    {message}
+                {message}
                 <Board
                     boardShape={this.state.board}
                     updateBoardShape={this.updateBoardShape}
